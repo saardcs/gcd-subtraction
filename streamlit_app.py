@@ -1,19 +1,33 @@
 import streamlit as st
 import random
+from math import gcd
 
 st.set_page_config(page_title="GCD Subtraction Practice", layout="centered")
 st.title("➖ GCD Practice (Euclidean Subtraction Method)")
 
+from math import gcd
+
 def generate_reasonable_pairs(n=5):
     pairs = []
     while len(pairs) < n:
-        # Generate a pair with numbers between 20 and 100
-        a = random.randint(20, 100)
-        b = random.randint(10, a - 1)  # ensure b < a to avoid immediate equality
-        # Optional: avoid pairs where gcd=1 (to keep steps meaningful)
-        from math import gcd
-        if gcd(a, b) > 1:
-            pairs.append((a, b))
+        a = random.randint(20, 60)
+        b = random.randint(10, a - 1)
+        if gcd(a, b) <= 1:
+            continue  # Skip if GCD is 1 (too many steps)
+
+        # Estimate subtraction steps
+        big, small = a, b
+        steps = 0
+        while big != small:
+            if big > small:
+                big -= small
+            else:
+                small -= big
+            steps += 1
+            if steps > 5:
+                break  # Too many steps, skip
+        else:
+            pairs.append((a, b))  # Accept only if <= 5 steps
     return pairs
 
 # Initialize session state
