@@ -29,6 +29,8 @@ if "problems" not in st.session_state:
     st.session_state.gcd_correct = False
 
 def reset_problem():
+    if st.session_state.index >= len(st.session_state.problems):
+        return  # Prevent crash
     a, b = st.session_state.problems[st.session_state.index]
     st.session_state.a = a
     st.session_state.b = b
@@ -36,7 +38,7 @@ def reset_problem():
     st.session_state.final_step_done = False
     st.session_state.gcd_checked = False
     st.session_state.gcd_correct = False
-
+    
 def full_reset():
     for key in list(st.session_state.keys()):
         del st.session_state[key]
@@ -80,7 +82,7 @@ else:
         with col4:
             st.markdown("=")
         with col5:
-            result = st.number_input("Result", key=f"final_res_{st.session_state.index}", step=1, label_visibility="collapsed")
+            result = st.number_input("Result", key=f"final_res_{st.session_state.index}", step=1, label_visibility="collapsed", value=0)
 
         if st.button("✅ Check Final Step", key=f"check_final_{st.session_state.index}"):
             if minuend == subtrahend == a and result == 0:
