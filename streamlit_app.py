@@ -101,8 +101,8 @@ if st.session_state.index >= 5:
             row = [name.strip(), team.strip(), timestamp]
             sheet.append_row(row)
             st.success("✅ Score submitted!")
-            if st.button("🔁 Restart"):
-                full_reset()
+            # if st.button("🔁 Restart"):
+            #     full_reset()
         else:
             st.warning("Please enter your name and team name.")
 
