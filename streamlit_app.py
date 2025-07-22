@@ -1,6 +1,8 @@
 import streamlit as st
 import random
 from math import gcd
+import qrcode
+import io
 
 st.set_page_config(page_title="GCD Subtraction Practice", layout="centered")
 st.title("➖ GCD Practice (Euclidean Subtraction Method)")
