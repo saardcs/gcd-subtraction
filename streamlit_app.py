@@ -5,7 +5,16 @@ from math import gcd
 st.set_page_config(page_title="GCD Subtraction Practice", layout="centered")
 st.title("➖ GCD Practice (Euclidean Subtraction Method)")
 
-from math import gcd
+# Sidebar with QR code
+st.sidebar.header("Scan This QR Code to View Menu Online")
+
+qr_link = "https://thai-tanic.streamlit.app"  # Replace with your actual URL
+qr = qrcode.make(qr_link)
+buf = io.BytesIO()
+qr.save(buf)
+buf.seek(0)
+
+st.sidebar.image(buf, width=300, caption=qr_link)
 
 def generate_reasonable_pairs(n=5):
     pairs = []
