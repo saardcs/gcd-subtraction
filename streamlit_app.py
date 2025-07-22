@@ -72,6 +72,37 @@ def full_reset():
 # End of problems
 if st.session_state.index >= 5:
     st.success(f"🎉 All done! Final score: {st.session_state.score} / 5")
+    name = st.text_input("Enter your name:")
+    team = st.text_input("Enter your team:")
+    
+    if st.button("Submit Score"):
+        if name.strip() and team.strip():
+            import gspread
+            from google.oauth2.service_account import Credentials
+
+            # Set up creds and open your sheet
+            scopes = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
+        
+            # Load credentials from Streamlit secrets
+            service_account_info = st.secrets["gcp_service_account"]
+            creds = Credentials.from_service_account_info(service_account_info, scopes=scopes)
+        
+            client = gspread.authorize(creds)
+            import datetime
+        
+            # Timestamp for filenames and sheets
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
+            try:
+                sheet = client.open("GCF").worksheet("Subtraction")
+            except gspread.WorksheetNotFound:
+                st.error(f"Worksheet '{selected_class}' not found. Please check your Google Sheet.")
+
+            row = [name.strip(), team.strip(), timestamp]
+            sheet.append_row(row)
+            st.success("✅ Score submitted!")
+        else:
+            st.warning("Please enter a name.")
     if st.button("🔁 Restart"):
         full_reset()
 
