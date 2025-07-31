@@ -73,10 +73,10 @@ def full_reset():
 if st.session_state.index >= 5:
     st.success(f"🎉 All done! Final score: {st.session_state.score} / 5")
     name = st.text_input("Enter your name:")
-    # team = st.text_input("Enter your team:")
+    team = st.text_input("Enter your class:")
     
     if st.button("Submit Score"):
-        if name.strip():
+        if name.strip() and team.strip():
             import gspread
             from google.oauth2.service_account import Credentials
 
@@ -98,14 +98,13 @@ if st.session_state.index >= 5:
             except gspread.WorksheetNotFound:
                 st.error(f"Worksheet not found. Please check your Google Sheet.")
 
-            # row = [name.strip(), team.strip(), timestamp]
-            row = [name.strip(), timestamp]
+            row = [name.strip(), team.strip(), timestamp]
             sheet.append_row(row)
             st.success("✅ Score submitted!")
             # if st.button("🔁 Restart"):
             #     full_reset()
         else:
-            st.warning("Please enter your name and team name.")
+            st.warning("Please enter your name and class.")
 
 else:
     # Start or resume problem
