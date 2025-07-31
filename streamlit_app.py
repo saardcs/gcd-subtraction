@@ -72,7 +72,7 @@ def full_reset():
 # End of problems
 if st.session_state.index >= 5:
     st.success(f"🎉 All done! Final score: {st.session_state.score} / 5")
-    name = st.text_input("Enter your name:")
+    name = st.text_input("Enter your nickname:")
     team = st.text_input("Enter your class:")
     
     if st.button("Submit Score"):
@@ -96,7 +96,7 @@ if st.session_state.index >= 5:
             try:
                 sheet = client.open("GCF").worksheet("Subtraction")
             except gspread.WorksheetNotFound:
-                st.error(f"Worksheet not found. Please check your Google Sheet.")
+                st.error("Worksheet not found. Please check your Google Sheet.")
 
             row = [name.strip(), team.strip(), timestamp]
             sheet.append_row(row)
@@ -104,7 +104,7 @@ if st.session_state.index >= 5:
             # if st.button("🔁 Restart"):
             #     full_reset()
         else:
-            st.warning("Please enter your name and class.")
+            st.warning("Please enter your nickname and class.")
 
 else:
     # Start or resume problem
